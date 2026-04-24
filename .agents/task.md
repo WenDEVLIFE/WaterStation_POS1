@@ -1,34 +1,34 @@
 # 📋 Project Task List: Water Station POS with Inventory System
 
 ## Phase 1: Database Architecture & Documentation (40%)
-- [ ] **Database Planning**
-    - [ ] Define Purpose, Scope, and Assumptions.
-    - [ ] Define User Roles & Permissions (Admin, Cashier).
-- [ ] **Data Requirements**
-    - [ ] List entities: Users, Products, Categories, Inventory, Sales, SalesDetails, Customers, Payments.
-- [ ] **Database Design**
-    - [ ] Create Conceptual Design (ER Diagram).
-    - [ ] Perform Normalization (UNF → 1NF → 2NF → 3NF).
-    - [ ] Identify Functional, Partial, and Transitive Dependencies.
-- [ ] **Physical Design**
-    - [ ] Define Table Structures, Data Types, and Constraints (PK, FK, NOT NULL, CHECK).
-    - [ ] Plan Indexing strategy.
+- [x] **Database Planning**
+    - [x] Define Purpose, Scope, and Assumptions.
+    - [x] Define User Roles & Permissions (Admin, Cashier).
+- [x] **Data Requirements**
+    - [x] List entities: Users, Products, Categories, Inventory, Sales, SalesDetails, Customers, Payments.
+- [x] **Database Design**
+    - [x] Create Conceptual Design (ER Diagram).
+    - [x] Perform Normalization (UNF → 1NF → 2NF → 3NF).
+    - [x] Identify Functional, Partial, and Transitive Dependencies.
+- [x] **Physical Design**
+    - [x] Define Table Structures, Data Types, and Constraints (PK, FK, NOT NULL, CHECK).
+    - [x] Plan Indexing strategy.
 
 ## Phase 2: MySQL Implementation (Backend)
-- [ ] **Schema Creation**
-    - [ ] Run SQL scripts for all tables and constraints.
-- [ ] **Advanced Features**
-    - [ ] Implement `process_sale` Stored Procedure (with parameters).
-    - [ ] Implement `restock` Stored Procedure.
-    - [ ] Implement `auto_deduct_stock` Trigger.
-    - [ ] Implement `prevent_negative_stock` Trigger.
+- [x] **Schema Creation**
+    - [x] Run SQL scripts for all tables and constraints.
+- [x] **Advanced Features**
+    - [x] Implement `process_sale` Stored Procedure (with parameters).
+    - [x] Implement `restock` Stored Procedure.
+    - [x] Implement `auto_deduct_stock` Trigger.
+    - [x] Implement `prevent_negative_stock` Trigger.
 - [ ] **Security (DCL)**
     - [ ] Create DB users and assign `GRANT` privileges.
-- [ ] **Seed Data (Requirement Checklist)**
-    - [ ] Insert 5+ Categories.
-    - [ ] Insert 20+ Products.
-    - [ ] Insert 10+ Customers.
-    - [ ] Insert 20+ Initial Sales Records for reporting.
+- [x] **Seed Data (Requirement Checklist)**
+    - [x] Insert 5+ Categories.
+    - [x] Insert 20+ Products.
+    - [x] Insert 10+ Customers.
+    - [x] Insert 20+ Initial Sales Records for reporting.
 
 ## Phase 3: Java Swing UI Implementation (40%)
 - [ ] **Project Setup**
