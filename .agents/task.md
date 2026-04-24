@@ -58,7 +58,7 @@
 ## Phase 5: Finalization & Presentation (10%)
 - [ ] **Validation & Error Handling**
     - [ ] Test all forms for user input validation.
-    - [ ] Verify immediate UI reflection of DB changes.
+    - [ ] Verify immediate UIreflection of DB changes.
 - [ ] **Documentation Cleanup**
     - [ ] Generate final PDF Documentation.
     - [ ] Export final `.sql` script.
