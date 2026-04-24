@@ -31,9 +31,9 @@
     - [x] Insert 20+ Initial Sales Records for reporting.
 
 ## Phase 3: Java Swing UI Implementation (40%)
-- [ ] **Project Setup**
-    - [ ] Configure `pom.xml` with dependencies (MySQL Connector, FlatLaf, JFreeChart).
-    - [ ] Create `DatabaseConnection` utility class.
+- [x] **Project Setup**
+    - [x] Configure `pom.xml` with dependencies (MySQL Connector, FlatLaf, JFreeChart).
+    - [x] Create `DatabaseConnection` utility class.
 - [ ] **Base UI Framework**
     - [ ] Setup Main Frame with Sidebar/Navigation.
     - [ ] Integrate FlatLaf for modern aesthetics.

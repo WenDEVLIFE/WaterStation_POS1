@@ -10,4 +10,24 @@
         <maven.compiler.release>25</maven.compiler.release>
         <exec.mainClass>waterstation_pos.waterstation_pos1.WaterStation_POS1</exec.mainClass>
     </properties>
+    <dependencies>
+        <!-- MySQL Connector/J -->
+        <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <version>8.3.0</version>
+        </dependency>
+        <!-- FlatLaf for Modern UI -->
+        <dependency>
+            <groupId>com.formdev</groupId>
+            <artifactId>flatlaf</artifactId>
+            <version>3.4</version>
+        </dependency>
+        <!-- JFreeChart for BI Reporting -->
+        <dependency>
+            <groupId>org.jfree</groupId>
+            <artifactId>jfreechart</artifactId>
+            <version>1.5.4</version>
+        </dependency>
+    </dependencies>
 </project>
