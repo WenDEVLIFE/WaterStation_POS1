@@ -39,7 +39,14 @@ public class MainFrame extends JFrame {
         lblTitle.setBorder(BorderFactory.createEmptyBorder(20, 10, 20, 10));
         sidebar.add(lblTitle);
 
-        String[] navItems = {"Dashboard", "Sales (POS)", "Inventory", "Products", "Categories", "Customers"};
+        java.util.List<String> navItems = new java.util.ArrayList<>(java.util.Arrays.asList(
+            "Dashboard", "Sales (POS)", "Inventory", "Products", "Categories", "Customers"
+        ));
+        
+        if ("Admin".equalsIgnoreCase(role)) {
+            navItems.add("Users");
+        }
+
         for (String item : navItems) {
             JButton btn = createNavButton(item);
             sidebar.add(btn);
@@ -70,6 +77,10 @@ public class MainFrame extends JFrame {
         contentPanel.add(new ProductPanel(), "Products");
         contentPanel.add(new CategoryPanel(), "Categories");
         contentPanel.add(new CustomerPanel(), "Customers");
+        
+        if ("Admin".equalsIgnoreCase(role)) {
+            contentPanel.add(new UserPanel(), "Users");
+        }
 
         add(contentPanel, BorderLayout.CENTER);
     }
