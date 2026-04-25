@@ -75,12 +75,13 @@ public class LoginForm extends javax.swing.JFrame {
             
             try (ResultSet rs = pst.executeQuery()) {
                 if (rs.next()) {
+                    int userId = rs.getInt("id");
                     String role = rs.getString("role");
                     String fullName = rs.getString("full_name");
                     JOptionPane.showMessageDialog(this, "Welcome " + fullName + "!\nRole: " + role, "Login Successful", JOptionPane.INFORMATION_MESSAGE);
-                    // Open Main Dashboard and pass role
+                    // Open Main Dashboard and pass user details
                     this.dispose();
-                    new MainFrame(role).setVisible(true);
+                    new MainFrame(userId, role).setVisible(true);
                 } else {
                     JOptionPane.showMessageDialog(this, "Invalid username or password.", "Login Failed", JOptionPane.ERROR_MESSAGE);
                 }

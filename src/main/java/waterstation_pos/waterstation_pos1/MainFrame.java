@@ -8,11 +8,13 @@ import waterstation_pos.waterstation_pos1.panels.*;
 
 public class MainFrame extends JFrame {
     
+    private int userId;
     private String role;
     private JPanel contentPanel;
     private CardLayout cardLayout;
 
-    public MainFrame(String role) {
+    public MainFrame(int userId, String role) {
+        this.userId = userId;
         this.role = role;
         initComponents();
     }
@@ -63,7 +65,7 @@ public class MainFrame extends JFrame {
 
         // Real CRUD Panels
         contentPanel.add(createDummyPanel("Dashboard Area"), "Dashboard");
-        contentPanel.add(createDummyPanel("Sales (POS) Area"), "Sales (POS)");
+        contentPanel.add(new SalesPanel(userId), "Sales (POS)");
         contentPanel.add(new InventoryPanel(), "Inventory");
         contentPanel.add(new ProductPanel(), "Products");
         contentPanel.add(new CategoryPanel(), "Categories");
