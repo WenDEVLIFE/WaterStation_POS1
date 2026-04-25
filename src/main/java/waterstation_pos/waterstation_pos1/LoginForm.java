@@ -78,9 +78,9 @@ public class LoginForm extends javax.swing.JFrame {
                     String role = rs.getString("role");
                     String fullName = rs.getString("full_name");
                     JOptionPane.showMessageDialog(this, "Welcome " + fullName + "!\nRole: " + role, "Login Successful", JOptionPane.INFORMATION_MESSAGE);
-                    // TODO: Open Main Dashboard and pass role
-                    // this.dispose();
-                    // new Dashboard(role).setVisible(true);
+                    // Open Main Dashboard and pass role
+                    this.dispose();
+                    new MainFrame(role).setVisible(true);
                 } else {
                     JOptionPane.showMessageDialog(this, "Invalid username or password.", "Login Failed", JOptionPane.ERROR_MESSAGE);
                 }

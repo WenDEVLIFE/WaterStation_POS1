@@ -34,14 +34,14 @@
 - [x] **Project Setup**
     - [x] Configure `pom.xml` with dependencies (MySQL Connector, FlatLaf, JFreeChart).
     - [x] Create `DatabaseConnection` utility class.
-- [ ] **Base UI Framework**
-    - [ ] Setup Main Frame with Sidebar/Navigation.
-    - [ ] Integrate FlatLaf for modern aesthetics.
-- [ ] **CRUD Modules**
-    - [ ] Product Management (Add, Update, Delete, View).
-    - [ ] Category Management.
-    - [ ] Customer Records.
-    - [ ] Inventory Tracking Module.
+- [x] **Base UI Framework**
+    - [x] Setup Main Frame with Sidebar/Navigation.
+    - [x] Integrate FlatLaf for modern aesthetics.
+- [x] **CRUD Modules**
+    - [x] Product Management (Add, Update, Delete, View).
+    - [x] Category Management.
+    - [x] Customer Records.
+    - [x] Inventory Tracking Module.
 - [ ] **Sales Processing System**
     - [ ] Create Transaction UI (Multi-product cart).
     - [ ] Implement Automated Total Computation.

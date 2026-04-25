@@ -78,7 +78,7 @@ CREATE TABLE sales_details (
     product_id INT NOT NULL,
     quantity INT NOT NULL CHECK (quantity > 0),
     unit_price DECIMAL(10, 2) NOT NULL,
-    subtotal DECIMAL(10, 2) AS (quantity * unit_price) STORED,
+    subtotal DECIMAL(10, 2) AS (quantity * unit_price),
     FOREIGN KEY (sale_id) REFERENCES sales(id) ON DELETE CASCADE,
     FOREIGN KEY (product_id) REFERENCES products(id)
 ) ENGINE=InnoDB;
@@ -97,80 +97,9 @@ CREATE TABLE inventory_logs (
 CREATE INDEX idx_product_name ON products(name);
 CREATE INDEX idx_sale_date ON sales(sale_date);
 
--- 4. TRIGGERS
-
--- Trigger: Auto-deduct stock after sale
-DELIMITER //
-CREATE TRIGGER trg_after_sale_detail_insert
-AFTER INSERT ON sales_details
-FOR EACH ROW
-BEGIN
-    UPDATE products 
-    SET stock_quantity = stock_quantity - NEW.quantity
-    WHERE id = NEW.product_id;
-    
-    INSERT INTO inventory_logs (product_id, change_amount, reason)
-    VALUES (NEW.product_id, -NEW.quantity, CONCAT('Sale #', NEW.sale_id));
-END //
-DELIMITER ;
-
--- Trigger: Prevent negative stock
-DELIMITER //
-CREATE TRIGGER trg_before_sale_detail_insert
-BEFORE INSERT ON sales_details
-FOR EACH ROW
-BEGIN
-    DECLARE available_stock INT;
-    SELECT stock_quantity INTO available_stock FROM products WHERE id = NEW.product_id;
-    
-    IF available_stock < NEW.quantity THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Insufficient stock for this product.';
-    END IF;
-END //
-DELIMITER ;
-
--- 5. STORED PROCEDURES
-
--- Procedure: Process Sale (Demonstrating TCL)
-DELIMITER //
-CREATE PROCEDURE sp_process_sale(
-    IN p_customer_id INT,
-    IN p_user_id INT,
-    IN p_payment_method VARCHAR(50),
-    OUT p_sale_id INT
-)
-BEGIN
-    DECLARE EXIT HANDLER FOR SQLEXCEPTION
-    BEGIN
-        ROLLBACK;
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Transaction failed. Sale rolled back.';
-    END;
-
-    START TRANSACTION;
-        INSERT INTO sales (customer_id, user_id, total_amount, payment_method)
-        VALUES (p_customer_id, p_user_id, 0.00, p_payment_method);
-        
-        SET p_sale_id = LAST_INSERT_ID();
-    COMMIT;
-END //
-DELIMITER ;
-
--- Procedure: Restock Product
-DELIMITER //
-CREATE PROCEDURE sp_restock_product(
-    IN p_product_id INT,
-    IN p_quantity INT,
-    IN p_reason VARCHAR(255)
-)
-BEGIN
-    START TRANSACTION;
-        UPDATE products SET stock_quantity = stock_quantity + p_quantity WHERE id = p_product_id;
-        INSERT INTO inventory_logs (product_id, change_amount, reason) VALUES (p_product_id, p_quantity, p_reason);
-    COMMIT;
-END //
-DELIMITER ;
-
--- 6. SEED DATA
+-- =============================================
+-- 4. SEED DATA (Moved before Triggers to avoid PhpMyAdmin delimiter errors halting inserts)
+-- =============================================
 
 -- Categories (5+)
 INSERT INTO categories (name, description) VALUES 
@@ -222,8 +151,6 @@ INSERT INTO users (username, password, role, full_name) VALUES
 ('cashier1', 'cashier123', 'Cashier', 'Jane Doe');
 
 -- Initial Sales (20+ Records - For Reporting)
--- Note: Manually inserting into sales and sales_details to simulate history
--- We will use a script-friendly approach here.
 INSERT INTO sales (customer_id, user_id, total_amount, sale_date) VALUES 
 (1, 2, 75.00, '2024-04-01 10:00:00'),
 (2, 2, 25.00, '2024-04-02 11:30:00'),
@@ -271,3 +198,80 @@ INSERT INTO sales_details (sale_id, product_id, quantity, unit_price) VALUES
 
 -- Update sales totals based on details (Manual sync for seed data)
 UPDATE sales s SET total_amount = (SELECT SUM(subtotal) FROM sales_details WHERE sale_id = s.id);
+
+-- =============================================
+-- 5. TRIGGERS
+-- =============================================
+
+-- Trigger: Auto-deduct stock after sale
+DELIMITER //
+CREATE TRIGGER trg_after_sale_detail_insert
+AFTER INSERT ON sales_details
+FOR EACH ROW
+BEGIN
+    UPDATE products 
+    SET stock_quantity = stock_quantity - NEW.quantity
+    WHERE id = NEW.product_id;
+    
+    INSERT INTO inventory_logs (product_id, change_amount, reason)
+    VALUES (NEW.product_id, -NEW.quantity, CONCAT('Sale #', NEW.sale_id));
+END //
+DELIMITER ;
+
+-- Trigger: Prevent negative stock
+DELIMITER //
+CREATE TRIGGER trg_before_sale_detail_insert
+BEFORE INSERT ON sales_details
+FOR EACH ROW
+BEGIN
+    DECLARE available_stock INT;
+    SELECT stock_quantity INTO available_stock FROM products WHERE id = NEW.product_id;
+    
+    IF available_stock < NEW.quantity THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Insufficient stock for this product.';
+    END IF;
+END //
+DELIMITER ;
+
+-- =============================================
+-- 6. STORED PROCEDURES
+-- =============================================
+
+-- Procedure: Process Sale (Demonstrating TCL)
+DELIMITER //
+CREATE PROCEDURE sp_process_sale(
+    IN p_customer_id INT,
+    IN p_user_id INT,
+    IN p_payment_method VARCHAR(50),
+    OUT p_sale_id INT
+)
+BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        ROLLBACK;
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Transaction failed. Sale rolled back.';
+    END;
+
+    START TRANSACTION;
+        INSERT INTO sales (customer_id, user_id, total_amount, payment_method)
+        VALUES (p_customer_id, p_user_id, 0.00, p_payment_method);
+        
+        SET p_sale_id = LAST_INSERT_ID();
+    COMMIT;
+END //
+DELIMITER ;
+
+-- Procedure: Restock Product
+DELIMITER //
+CREATE PROCEDURE sp_restock_product(
+    IN p_product_id INT,
+    IN p_quantity INT,
+    IN p_reason VARCHAR(255)
+)
+BEGIN
+    START TRANSACTION;
+        UPDATE products SET stock_quantity = stock_quantity + p_quantity WHERE id = p_product_id;
+        INSERT INTO inventory_logs (product_id, change_amount, reason) VALUES (p_product_id, p_quantity, p_reason);
+    COMMIT;
+END //
+DELIMITER ;
