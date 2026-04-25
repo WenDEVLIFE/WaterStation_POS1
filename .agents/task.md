@@ -48,12 +48,12 @@
     - [x] Integrate TCL (Transaction Control) in Java logic.
 
 ## Phase 4: Business Intelligence & Reporting (10%)
-- [ ] **Analytical Dashboard**
-    - [ ] Monthly Sales Trend Chart (Line/Bar).
-    - [ ] Product Category Performance (Pie).
-- [ ] **Reporting**
-    - [ ] Daily Sales Report.
-    - [ ] Low Stock Warning Report.
+- [x] **Analytical Dashboard**
+    - [x] Monthly Sales Trend Chart (Line/Bar).
+    - [x] Product Category Performance (Pie).
+- [x] **Reporting**
+    - [x] Daily Sales Report.
+    - [x] Low Stock Warning Report.
 
 ## Phase 5: Finalization & Presentation (10%)
 - [ ] **Validation & Error Handling**

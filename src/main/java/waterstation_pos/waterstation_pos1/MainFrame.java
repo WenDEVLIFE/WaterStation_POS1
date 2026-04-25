@@ -64,7 +64,7 @@ public class MainFrame extends JFrame {
         contentPanel.setBackground(Color.WHITE);
 
         // Real CRUD Panels
-        contentPanel.add(createDummyPanel("Dashboard Area"), "Dashboard");
+        contentPanel.add(new DashboardPanel(), "Dashboard");
         contentPanel.add(new SalesPanel(userId), "Sales (POS)");
         contentPanel.add(new InventoryPanel(), "Inventory");
         contentPanel.add(new ProductPanel(), "Products");
